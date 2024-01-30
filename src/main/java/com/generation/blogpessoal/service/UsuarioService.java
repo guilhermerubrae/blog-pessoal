@@ -60,23 +60,30 @@ public class UsuarioService {
 
 	public Optional<UsuarioLogin> autenticarUsuario(Optional<UsuarioLogin> usuarioLogin) {
         
+        // Gera o Objeto de autenticação
 		var credenciais = new UsernamePasswordAuthenticationToken(usuarioLogin.get().getUsuario(), usuarioLogin.get().getSenha());
 		
+        // Autentica o Usuario
 		Authentication authentication = authenticationManager.authenticate(credenciais);
         
+        // Se a autenticação foi efetuada com sucesso
 		if (authentication.isAuthenticated()) {
 
+            // Busca os dados do usuário
 			Optional<Usuario> usuario = usuarioRepository.findByUsuario(usuarioLogin.get().getUsuario());
 
+            // Se o usuário foi encontrado
 			if (usuario.isPresent()) {
 
-				usuarioLogin.get().setId(usuario.get().getId());
+                // Preenche o Objeto usuarioLogin com os dados encontrados 
+			   usuarioLogin.get().setId(usuario.get().getId());
                 usuarioLogin.get().setNome(usuario.get().getNome());
                 usuarioLogin.get().setFoto(usuario.get().getFoto());
                 usuarioLogin.get().setToken(gerarToken(usuarioLogin.get().getUsuario()));
                 usuarioLogin.get().setSenha("");
-								
-				return usuarioLogin;
+				
+                 // Retorna o Objeto preenchido
+			   return usuarioLogin;
 			
 			}
 
@@ -91,10 +98,11 @@ public class UsuarioService {
 		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 		
 		return encoder.encode(senha);
+
 	}
 
 	private String gerarToken(String usuario) {
 		return "Bearer " + jwtService.generateToken(usuario);
 	}
 
-} 
+}

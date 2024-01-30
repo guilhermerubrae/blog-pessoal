@@ -33,12 +33,12 @@ public class Postagem {
 	
 	@UpdateTimestamp
 	private LocalDateTime data;
-
-    @ManyToOne
+	
+	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Tema tema;
-
-    @ManyToOne
+	
+	@ManyToOne
 	@JsonIgnoreProperties("postagem")
 	private Usuario usuario;
 
@@ -73,21 +73,21 @@ public class Postagem {
     public void setData(LocalDateTime data) {
         this.data = data;
     }
-  
-    public Tema getTema() {
-        return this.tema;
-    }
 
-    public void setTema(Tema tema) {
-        this.tema = tema;
-    }
+	public Tema getTema() {
+		return tema;
+	}
 
-    public Usuario getUsuario() {
-        return this.usuario;
-    }
+	public void setTema(Tema tema) {
+		this.tema = tema;
+	}
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+    
 }
